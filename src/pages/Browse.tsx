@@ -12,26 +12,30 @@ export default function Browse() {
   };
 
   const handleSearch = () => {
-    if (searchQuery.length > 3) {
-      navigate(`/search?query=${searchQuery}`);
+    if (searchQuery.trim().length > 3) {
+      // Cek jika input lebih dari 3 karakter
+      navigate(`/search?query=${searchQuery.trim()}`);
     }
   };
 
   return (
     <>
+      {/* Bagian Navigasi */}
       <nav className="flex items-center justify-between px-5 mt-[30px]">
         <a href="index.html" className="flex shrink-0">
-          <img src="/assets/images/logos/logo.svg" alt="logo" />
+          <img src="/assets/images/logos/logo.svg" alt="Website Logo" />
         </a>
         <a href="#">
           <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-[0_10px_20px_0_#D6D6D6AB] transition-all duration-300 hover:shadow-[0_10px_20px_0_#FF4C1C80]">
-            <img src="/assets/images/icons/notification.svg" className="w-5 h-5 object-contain" alt="icon" />
+            <img src="/assets/images/icons/notification.svg" className="w-5 h-5 object-contain" alt="Notification Icon" />
           </div>
         </a>
       </nav>
+
+      {/* Bagian Form Pencarian */}
       <div id="SearchForm" className="px-5 mt-[30px]">
         <div className="flex items-center rounded-full p-[5px_14px] pr-[5px] gap-[10px] bg-white shadow-[0_12px_30px_0_#D6D6D652] transition-all duration-300 focus-within:ring-1 focus-within:ring-[#FF4C1C]">
-          <img src="/assets/images/icons/note-favorite.svg" className="w-6 h-6" alt="icon" />
+          <img src="/assets/images/icons/note-favorite.svg" className="w-6 h-6" alt="Favorite Icon" />
           <input
             type="text"
             name="search"
@@ -41,36 +45,49 @@ export default function Browse() {
             className="appearance-none outline-none w-full font-semibold placeholder:font-normal placeholder:text-black"
             placeholder="Find our best food recipes"
           />
-          <button onClick={handleSearch} className=" flex shrink-0 w-[42px] h-[42px]">
-            <img src="/assets/images/icons/search.svg" alt="icon" />
+          <button onClick={handleSearch} className="flex shrink-0 w-[42px] h-[42px]" aria-label="Search">
+            <img src="/assets/images/icons/search.svg" alt="Search Icon" />
           </button>
         </div>
       </div>
-      <CategoryWrapper></CategoryWrapper>
-      <BrowseFeaturedRecipesWrapper></BrowseFeaturedRecipesWrapper>
+
+      {/* Bagian Kategori */}
+      <CategoryWrapper />
+
+      {/* Bagian Browse Featured Recipes */}
+      <BrowseFeaturedRecipesWrapper />
+
+      {/* Bottom Navigation */}
       <div id="BottomNav" className="fixed z-50 bottom-0 w-full max-w-[640px] mx-auto border-t border-[#E7E7E7] py-4 px-5 bg-white/70 backdrop-blur">
-        <div className="flex items-center justify-evenly ">
+        <div className="flex items-center justify-evenly">
+          {/* Ikon Navigasi Browse */}
           <a href="#" className="nav-items">
             <div className="flex flex-col items-center text-center gap-[7px] text-sm leading-[21px] font-semibold">
-              <img src="/assets/images/icons/note-favorite-orange.svg" className="w-6 h-6" alt="icon" />
+              <img src="/assets/images/icons/note-favorite-orange.svg" className="w-6 h-6" alt="Browse Icon" />
               <span>Browse</span>
             </div>
           </a>
+
+          {/* Ikon Navigasi Featured */}
           <a href="#" className="nav-items">
             <div className="flex flex-col items-center text-center gap-[7px] text-sm leading-[21px]">
-              <img src="/assets/images/icons/crown-grey.svg" className="w-6 h-6" alt="icon" />
+              <img src="/assets/images/icons/crown-grey.svg" className="w-6 h-6" alt="Featured Icon" />
               <span>Featured</span>
             </div>
           </a>
+
+          {/* Ikon Navigasi Pricing */}
           <a href="#" className="nav-items">
             <div className="flex flex-col items-center text-center gap-[7px] text-sm leading-[21px]">
-              <img src="/assets/images/icons/receipt-item-grey.svg" className="w-6 h-6" alt="icon" />
+              <img src="/assets/images/icons/receipt-item-grey.svg" className="w-6 h-6" alt="Pricing Icon" />
               <span>Pricing</span>
             </div>
           </a>
+
+          {/* Ikon Navigasi Settings */}
           <a href="#" className="nav-items">
             <div className="flex flex-col items-center text-center gap-[7px] text-sm leading-[21px]">
-              <img src="/assets/images/icons/setting-2-grey.svg" className="w-6 h-6" alt="icon" />
+              <img src="/assets/images/icons/setting-2-grey.svg" className="w-6 h-6" alt="Settings Icon" />
               <span>Settings</span>
             </div>
           </a>

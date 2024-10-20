@@ -1,6 +1,41 @@
+import { useParams } from "react-router-dom";
 import CategoryFeaturedRecipesWrapper from "../wrappers/CategoryFeaturedRecipesWrapper";
+import { useEffect, useState } from "react";
+import { Category } from "../types/type";
+import axios from "axios";
 
 export default function CategoryDetails() {
+  const { slug } = useParams<{ slug: string }>();
+  const [category, setCategory] = useState<Category | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    axios
+      .get(`http://delirecipesbwa.test/api/category/${slug}`)
+      .then((response) => {
+        setCategory(response.data.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, [slug]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error loading: {error}</p>;
+  }
+
+  if (!category) {
+    return <p>Category not found</p>;
+  }
+  const baseURL = "http://delirecipesbwa.test/storage";
+
   return (
     <>
       <nav className="absolute top-0 flex w-full max-w-[640px] items-center justify-between px-5 mt-[30px] z-20">
@@ -25,11 +60,11 @@ export default function CategoryDetails() {
           <div className="flex items-center justify-between w-full rounded-[20px] p-[10px_20px] gap-4 bg-white shadow-[0_12px_30px_0_#D6D6D640]">
             <div className="flex items-center gap-[10px]">
               <div className="w-[70px] h-[70px] overflow-hidden">
-                <img src="/assets/images/icons/bakery.png" className="w-full h-full object-cover" alt="icon" />
+                <img src={`${baseURL}/${category.icon}`} className="w-full h-full object-cover" alt="icon" />
               </div>
               <div className="flex flex-col gap-[2px]">
-                <p className="font-bold text-lg leading-[27px]">Bakery</p>
-                <p className="text-sm leading-[21px] text-[#848486]">183,498 Recipes</p>
+                <p className="font-bold text-lg leading-[27px]">{category.name}</p>
+                <p className="text-sm leading-[21px] text-[#848486]">{category.recipes_count} Recipes</p>
               </div>
             </div>
             <button className="flex items-center justify-center w-10 h-10 rounded-full bg-white overflow-hidden shadow-[0_10px_20px_0_#D6D6D6AB]">

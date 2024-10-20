@@ -1,5 +1,4 @@
-import { Swiper } from "swiper/react";
-import { SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import CategoryCard from "../components/CategoryCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,23 +9,25 @@ export default function CategoryWrapper() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => { 
+  useEffect(() => {
     axios
-      .get("http://delirecipesbwa.test/api/categories")
+      .get("http://delirecipesbwa.test/api/categories") // Mengambil data kategori dari API
       .then((response) => {
-        setCategories(response.data.data);
-        setLoading(false);
+        setCategories(response.data.data); // Menyimpan data kategori ke dalam state
+        setLoading(false); // Menghentikan loading setelah data berhasil diambil
       })
       .catch((error) => {
-        setError(error.message);
-        setLoading(false);
+        setError(error.message || "Error fetching data"); // Menyimpan pesan error jika terjadi
+        setLoading(false); // Menghentikan loading ketika ada error
       });
   }, []);
 
+  // Menampilkan pesan loading saat data sedang diambil
   if (loading) {
     return <p>Loading...</p>;
   }
 
+  // Menampilkan pesan error jika terjadi kesalahan saat mengambil data
   if (error) {
     return <p>Error loading data: {error}</p>;
   }
@@ -38,6 +39,7 @@ export default function CategoryWrapper() {
       </div>
       <div className="swiper w-full mt-3">
         <Swiper className="w-full mt-3" direction="horizontal" spaceBetween={16} slidesPerView="auto" slidesOffsetBefore={20} slidesOffsetAfter={20}>
+          {/* Loop untuk menampilkan setiap kategori */}
           {categories.map((category) => (
             <SwiperSlide key={category.id} className="!w-fit pb-[30px]">
               <CategoryCard category={category} />

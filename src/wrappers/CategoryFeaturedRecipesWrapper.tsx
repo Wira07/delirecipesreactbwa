@@ -13,27 +13,29 @@ export default function CategoryFeaturedRecipesWrapper() {
 
   useEffect(() => {
     axios
-      .get(`http://delirecipesbwa.test/api/category/${slug}`) // Menghapus // yang berlebihan
+      .get(`http://delirecipesbwa.test/api/category/bakeri`)
       .then((response) => {
-        setCategory(response.data.data);
-        setLoading(false);
+        setCategory(response.data.data); // Mengisi data kategori
+        setLoading(false); // Menghentikan loading
       })
       .catch((error) => {
-        // Menangani pesan error yang lebih spesifik
         const message = error.response?.data?.message || error.message || "Something went wrong";
-        setError(message);
-        setLoading(false);
+        setError(message); // Menyimpan pesan error
+        setLoading(false); // Menghentikan loading
       });
   }, [slug]);
 
+  // Menampilkan pesan loading saat data belum selesai diambil
   if (loading) {
     return <p>Loading...</p>;
   }
 
+  // Menampilkan pesan error jika terjadi error
   if (error) {
-    return <p>Error loading: {error}</p>;
+    return <p>Error loading category: {error}</p>;
   }
 
+  // Menampilkan pesan jika kategori tidak ditemukan
   if (!category) {
     return <p>Category not found</p>;
   }
@@ -47,14 +49,7 @@ export default function CategoryFeaturedRecipesWrapper() {
         </a>
       </div>
       <div className="swiper w-full mt-3">
-        <Swiper
-          className="w-full mt-3"
-          direction="horizontal"
-          spaceBetween={16}
-          slidesPerView="auto"
-          slidesOffsetBefore={20}
-          slidesOffsetAfter={20}
-        >
+        <Swiper className="w-full mt-3" direction="horizontal" spaceBetween={16} slidesPerView="auto" slidesOffsetBefore={20} slidesOffsetAfter={20}>
           {category.recipes && category.recipes.length > 0 ? (
             category.recipes.map((recipe) => (
               <SwiperSlide key={recipe.id} className="!w-fit">
@@ -62,7 +57,7 @@ export default function CategoryFeaturedRecipesWrapper() {
               </SwiperSlide>
             ))
           ) : (
-            <p>Belum ada data recipe dari kategori berikut</p>
+            <p>Belum ada data recipe dari kategori ini</p>
           )}
         </Swiper>
       </div>

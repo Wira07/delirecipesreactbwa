@@ -13,23 +13,32 @@ export default function BrowseFeaturedRecipesWrapper() {
     axios
       .get("http://delirecipesbwa.test/api/recipes")
       .then((response) => {
-        setRecipes(response.data.data);
-        setLoading(false);
+        setRecipes(response.data.data); // Mengisi data recipes
+        setLoading(false); // Menghentikan loading
       })
       .catch((error) => {
-        setError(error);
+        const message = error.response?.data?.message || error.message || "Something went wrong";
+        setError(message); // Menyimpan pesan error
         setLoading(false);
       });
   }, []);
 
+  // Penanganan ketika masih loading
   if (loading) {
     return <p>Loading...</p>;
   }
 
+  // Penanganan ketika terjadi error
   if (error) {
-    return <p>Error loading jobs: {error}</p>;
+    return <p>Error loading recipes: {error}</p>;
   }
 
+  // Penanganan ketika tidak ada resep
+  if (recipes.length === 0) {
+    return <p>No recipes available at the moment.</p>;
+  }
+
+  // Render UI ketika data berhasil didapat
   return (
     <section id="MadeByPeople">
       <div className="flex items-center justify-between px-5">
@@ -40,10 +49,9 @@ export default function BrowseFeaturedRecipesWrapper() {
       </div>
       <div className="swiper w-full mt-3">
         <Swiper className="w-full mt-3" direction="horizontal" spaceBetween={16} slidesPerView="auto" slidesOffsetBefore={20} slidesOffsetAfter={20}>
-
           {recipes.map((recipe) => (
-            <SwiperSlide key={recipe.id} className=" !w-fit">
-              <FeaturedRecipeCard recipe={recipe}/>
+            <SwiperSlide key={recipe.id} className="!w-fit">
+              <FeaturedRecipeCard recipe={recipe} />
             </SwiperSlide>
           ))}
         </Swiper>

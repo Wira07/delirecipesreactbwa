@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Browse from "./pages/Browse";
-import CategoryDetails from "./pages/CategoryDetails";
 import SearchDetails from "./pages/SearchDetails";
+import CategoryDetails from "./pages/CategoryDetails";
 
 // import RecipeDetails from './pages/RecipeDetails';
 // import CategoryDetails from './pages/CategoryDetails';
