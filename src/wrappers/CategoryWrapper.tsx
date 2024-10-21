@@ -3,6 +3,7 @@ import CategoryCard from "../components/CategoryCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Category } from "../types/type";
+import { Link } from "react-router-dom";
 
 export default function CategoryWrapper() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -42,7 +43,9 @@ export default function CategoryWrapper() {
           {/* Loop untuk menampilkan setiap kategori */}
           {categories.map((category) => (
             <SwiperSlide key={category.id} className="!w-fit pb-[30px]">
-              <CategoryCard category={category} />
+              <Link to={`/category/${category.slug}`}>
+                <CategoryCard category={category} />
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

@@ -1,11 +1,10 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import FeaturedRecipeCard from "../components/FeaturedRecipeCard";
-import { useEffect, useState } from "react";
-import { Category } from "../types/type";
-import axios from "axios";
 import { useParams } from "react-router-dom";
+import RecipeCardResult from "../components/RecipeCardResult";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Category } from "../types/type";
 
-export default function CategoryFeaturedRecipesWrapper() {
+export default function CategoryLatestRecipesWrapper() {
   const { slug } = useParams<{ slug: string }>();
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,25 +40,12 @@ export default function CategoryFeaturedRecipesWrapper() {
   }
 
   return (
-    <section id="MadeByPeople">
-      <div className="flex items-center justify-between px-5">
-        <h2 className="font-bold">Made by People</h2>
-        <a href="#" className="font-semibold text-sm leading-[21px] text-[#FF4C1C]">
-          Explore All
-        </a>
+    <section id="LatestRecipes" className="px-5 mt-[30px]">
+      <div className="flex items-center justify-between">
+        <h2 className="font-bold">Latest Recipes</h2>
       </div>
-      <div className="swiper w-full mt-3">
-        <Swiper className="w-full mt-3" direction="horizontal" spaceBetween={16} slidesPerView="auto" slidesOffsetBefore={20} slidesOffsetAfter={20}>
-          {category.recipes && category.recipes.length > 0 ? (
-            category.recipes.map((recipe) => (
-              <SwiperSlide key={recipe.id} className="!w-fit">
-                <FeaturedRecipeCard recipe={recipe} />
-              </SwiperSlide>
-            ))
-          ) : (
-            <p>Belum ada data recipe dari kategori ini</p>
-          )}
-        </Swiper>
+      <div className="flex flex-col gap-[18px] mt-[18px]">
+        {category.recipes.length > 0 ? category.recipes.map((recipe) => <RecipeCardResult key={recipe.id} recipe={recipe}></RecipeCardResult>) : <p>Belum ada data terkait</p>}
       </div>
     </section>
   );
