@@ -1,6 +1,14 @@
+import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import IngredientCard from "../components/IngredientCard";
 
 export default function RecipeDetails() {
+  const [activeTab, setActiveTab] = useState("ingredients");
+
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+  };
+
   return (
     <>
       <nav className="absolute top-0 flex w-full max-w-[640px] items-center justify-between px-5 mt-[30px] z-20">
@@ -88,74 +96,78 @@ export default function RecipeDetails() {
         </div>
         <div className="swiper-tabs w-full overflow-hidden mt-3">
           <div className="swiper-wrapper" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist" data-tabs-active-classes="shadow-[0_10px_20px_0_#FF4C1C80] !bg-[#FF4C1C]" data-tabs-inactive-classes="!bg-black">
-            <div className="swiper-slide !w-fit pb-[26px]">
-              <button
-                className="flex items-center gap-[10px] py-3 px-4 rounded-full font-semibold !text-white bg-black transition-all duration-300 hover:shadow-[0_10px_20px_0_#FF4C1C80] hover:!bg-[#FF4C1C]"
-                id="ingredients-tab"
-                data-tabs-target="#ingredients"
-                type="button"
-                role="tab"
-                aria-controls="ingredients"
-                aria-selected="true"
-              >
-                <img src="/assets/images/icons/coffee-white.svg" className="w-[22px] h-[22px]" alt="icon" />
-                <h3>Ingredients</h3>
-              </button>
-            </div>
-            <div className="swiper-slide !w-fit pb-[26px]">
-              <button
-                className="flex items-center gap-[10px] py-3 px-4 rounded-full font-semibold !text-white bg-black transition-all duration-300 hover:shadow-[0_10px_20px_0_#FF4C1C80] hover:!bg-[#FF4C1C]"
-                id="tutorials-tab"
-                data-tabs-target="#tutorials"
-                type="button"
-                role="tab"
-                aria-controls="tutorials"
-                aria-selected="false"
-              >
-                <img src="/assets/images/icons/note-favorite-white.svg" className="w-[22px] h-[22px]" alt="icon" />
-                <h3>Tutorials</h3>
-              </button>
-            </div>
-            <div className="swiper-slide !w-fit pb-[26px]">
-              <button
-                className="flex items-center gap-[10px] py-3 px-4 rounded-full font-semibold !text-white bg-black transition-all duration-300 hover:shadow-[0_10px_20px_0_#FF4C1C80] hover:!bg-[#FF4C1C]"
-                id="reviews-tab"
-                data-tabs-target="#reviews"
-                type="button"
-                role="tab"
-                aria-controls="reviews"
-                aria-selected="false"
-              >
-                <img src="/assets/images/icons/star-white.svg" className="w-[22px] h-[22px]" alt="icon" />
-                <h3>Reviews</h3>
-              </button>
-            </div>
+            <Swiper className="w-full" direction="horizontal" spaceBetween={16} slidesPerView="auto" slidesOffsetBefore={20} slidesOffsetAfter={20}>
+              <SwiperSlide className="swiper-slide !w-fit pb-[26px]">
+                <button
+                  className="flex items-center gap-[10px] py-3 px-4 rounded-full font-semibold !text-white bg-black transition-all duration-300 hover:shadow-[0_10px_20px_0_#FF4C1C80] hover:!bg-[#FF4C1C]"
+                  id="ingredients-tab"
+                  data-tabs-target="#ingredients"
+                  type="button"
+                  role="tab"
+                  aria-controls="ingredients"
+                  aria-selected="true"
+                  onClick={() => handleTabClick("ingredients")}
+                >
+                  <img src="/assets/images/icons/coffee-white.svg" className="w-[22px] h-[22px]" alt="icon" />
+                  <h3>Ingredients</h3>
+                </button>
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide !w-fit pb-[26px]">
+                <button
+                  className="flex items-center gap-[10px] py-3 px-4 rounded-full font-semibold !text-white bg-black transition-all duration-300 hover:shadow-[0_10px_20px_0_#FF4C1C80] hover:!bg-[#FF4C1C]"
+                  id="tutorials-tab"
+                  data-tabs-target="#tutorials"
+                  type="button"
+                  role="tab"
+                  aria-controls="tutorials"
+                  aria-selected="false"
+                  onClick={() => handleTabClick("tutorials")}
+                >
+                  <img src="/assets/images/icons/note-favorite-white.svg" className="w-[22px] h-[22px]" alt="icon" />
+                  <h3>Tutorials</h3>
+                </button>
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide !w-fit pb-[26px]">
+                <button
+                  className="flex items-center gap-[10px] py-3 px-4 rounded-full font-semibold !text-white bg-black transition-all duration-300 hover:shadow-[0_10px_20px_0_#FF4C1C80] hover:!bg-[#FF4C1C]"
+                  id="reviews-tab"
+                  data-tabs-target="#reviews"
+                  type="button"
+                  role="tab"
+                  aria-controls="reviews"
+                  aria-selected="false"
+                  onClick={() => handleTabClick("reviews")}
+                >
+                  <img src="/assets/images/icons/star-white.svg" className="w-[22px] h-[22px]" alt="icon" />
+                  <h3>Reviews</h3>
+                </button>
+              </SwiperSlide>
+            </Swiper>
           </div>
         </div>
 
         <div id="default-tab-content">
-          <div className="hidden px-5" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
-            <div className="grid grid-cols-2 gap-5">
-              <div className="flex flex-col items-center text-center w-full rounded-[20px] p-[14px] gap-[14px] bg-white shadow-[0_12px_30px_0_#D6D6D680]">
-                <div className="thumbnail flex shrink-0 w-full aspect-[138.5/100] rounded-[20px] bg-[#D9D9D9] overflow-hidden">
-                  <img src="/assets/images/ingredients/ingredient-1.png" className="object-cover w-full h-full" alt="ingredient" />
-                </div>
-                <div className="text flex flex-col items-center gap-2">
-                  <h6 className="font-semibold">Beef</h6>
-                  <p className="text-sm leading-[18px] text-[#FF4C1C]">200mg</p>
-                </div>
+          {activeTab === "ingredients" && (
+            <div className="px-5" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
+              <div className="grid grid-cols-2 gap-5">
+                <IngredientCard></IngredientCard>
+                <IngredientCard></IngredientCard>
+                <IngredientCard></IngredientCard>
               </div>
-              {/* Add similar blocks for other ingredients */}
             </div>
-          </div>
+          )}
 
-          <div className="hidden px-5" id="tutorials" role="tabpanel" aria-labelledby="tutorials-tab">
-            <p>Tutorial content will go here...</p>
-          </div>
+          {activeTab === "tutorials" && (
+            <div className="px-5" id="tutorials" role="tabpanel" aria-labelledby="tutorials-tab">
+              <p>Tutorial content will go here...</p>
+            </div>
+          )}
 
-          <div className="hidden px-5" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-            <p>Review content will go here...</p>
-          </div>
+          {activeTab === "reviews" && (
+            <div className="px-5" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+              <p>Review content will go here...</p>
+            </div>
+          )}
         </div>
       </section>
     </>
