@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import IngredientCard from "../components/IngredientCard";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { Recipe } from "../types/type";
@@ -69,7 +68,7 @@ export default function RecipeDetails() {
                 </div>
               </SwiperSlide>
               {recipe.photos.map((photo) => (
-                <SwiperSlide>
+                <SwiperSlide key={photo.id}>
                   <div className="relative w-full h-full flex shrink-0">
                     <div className="gradient-filter absolute w-full h-full bg-[linear-gradient(180deg,rgba(0,0,0,0)40.47%,#000000_81.6%)] z-10"></div>
                     <img src={`${baseURL}/${photo.photo}`} className="w-full h-full object-cover" alt="thumbnail" />
@@ -180,9 +179,17 @@ export default function RecipeDetails() {
           {activeTab === "ingredients" && (
             <div className="px-5" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
               <div className="grid grid-cols-2 gap-5">
-                <IngredientCard></IngredientCard>
-                <IngredientCard></IngredientCard>
-                <IngredientCard></IngredientCard>
+                {recipe.recipe_ingredients.map((recipeIngredients) => (
+                  <div key={recipeIngredients.id} className="flex flex-col items-center text-center w-full rounded-[20px] p-[14px] gap-[14px] bg-white shadow-[0_12px_30px_0_#D6D6D680]">
+                    <div className="thumbnail flex shrink-0 w-full aspect-[138.5/100] rounded-[20px] bg-[#D9D9D9] overflow-hidden">
+                      <img src={`${baseURL}/${recipeIngredients.ingredient.photo}`} className="object-cover w-full h-full" alt="ingredient" />
+                    </div>
+                    <div className="text flex flex-col items-center gap-2">
+                      <h6 className="font-semibold">{recipeIngredients.ingredient.name}</h6>
+                      <p className="text-sm leading-[18px] text-[#FF4C1C]">200mg</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}

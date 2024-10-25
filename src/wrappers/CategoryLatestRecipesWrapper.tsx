@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import RecipeCardResult from "../components/RecipeCardResult";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -45,7 +45,15 @@ export default function CategoryLatestRecipesWrapper() {
         <h2 className="font-bold">Latest Recipes</h2>
       </div>
       <div className="flex flex-col gap-[18px] mt-[18px]">
-        {category.recipes.length > 0 ? category.recipes.map((recipe) => <RecipeCardResult key={recipe.id} recipe={recipe}></RecipeCardResult>) : <p>Belum ada data terkait</p>}
+        {category.recipes.length > 0 ? (
+          category.recipes.map((recipe) => (
+            <Link to={`/recipe/${recipe.slug}`} key={recipe.id}>
+              <RecipeCardResult recipe={recipe}></RecipeCardResult>
+            </Link>
+          ))
+        ) : (
+          <p>Belum ada data terkait</p>
+        )}
       </div>
     </section>
   );
